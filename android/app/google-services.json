@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "123962604856",
+    "firebase_url": "https://shoppilot-6c17a-default-rtdb.firebaseio.com",
+    "project_id": "shoppilot-6c17a",
+    "storage_bucket": "shoppilot-6c17a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123962604856:android:11e6a20412419ab75e55cd",
+        "android_client_info": {
+          "package_name": "com.example.shop_pilot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123962604856-igh8jkc4kl9b2ni474gp3h05o04981m1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shop_pilot",
+            "certificate_hash": "965173a19cce3b6a70a404f4bc40cc502d5338c4"
+          }
+        },
+        {
+          "client_id": "123962604856-52bgncvucai50pc4f08v1ed0eg7s6rd9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW-3YjVncUyCyV_WKqHlETaSMSe0syOO0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123962604856-52bgncvucai50pc4f08v1ed0eg7s6rd9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "123962604856-s8t7avokbm0sa93nu3del0389ggj0tk9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shopPilot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
