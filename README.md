@@ -1,6 +1,10 @@
 # shop_pilot
 
-A new Flutter project.
+Shopilot is a Flutter-based shop management application designed vendors and businesses.
+
+The goal of Shopilot is to make everyday shop management simple, fast, and accessible, with AI voice assistance as a major part of the experience.
+
+Instead of spending time navigating multiple screens and entering information manually, vendors can use voice commands to perform common shop operations.
 
 ## Getting Started
 
