@@ -13,6 +13,7 @@ import '../../shared/widgets/app_logo.dart';
 import '../../providers/auth_provider.dart';
 import '../../data/services/api_service.dart';
 import '../../data/models/country_city_data.dart';
+import '../../core/utils/phone_helper.dart';
 import '../../l10n/app_localizations.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -50,10 +51,29 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     setState(() {
       _rememberMe = remember;
       if (remember) {
-        _phoneNumberController.text = prefs.getString(_prefsPhoneKey) ?? '';
+        final remembered = prefs.getString(_prefsPhoneKey) ?? '';
+        if (remembered.isNotEmpty) _applyRememberedPhone(remembered);
         _passwordController.text = prefs.getString(_prefsPasswordKey) ?? '';
       }
     });
+  }
+
+  /// The remembered number is stored fully normalized (e.g. "+923045454545")
+  /// for the API, but the input field only holds the national digits — the
+  /// "+92" is shown separately by the country picker. Setting the full
+  /// string straight into the field made it display "923045454545" glued
+  /// together. Resolve the right country from the stored dial code, then
+  /// strip it so only the local number (e.g. "3045454545") lands in the box.
+  void _applyRememberedPhone(String remembered) {
+    CountryData? match;
+    for (final c in _countries) {
+      if (remembered.startsWith(c.dialCode)) {
+        if (match == null || c.dialCode.length > match.dialCode.length) match = c;
+      }
+    }
+    if (match != null) _selectedCountry = match;
+    _phoneNumberController.text = nationalDigits(remembered, defaultCountryCode: _selectedCountry.dialCode);
+    _phoneValid = true;
   }
 
   Future<void> _saveCredentials(String normalizedPhone) async {

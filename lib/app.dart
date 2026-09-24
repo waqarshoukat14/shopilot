@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/theme/app_theme.dart';
+import 'core/theme/app_colors.dart';
 import 'core/router/app_router.dart';
 import 'providers/locale_provider.dart';
+import 'providers/theme_provider.dart';
 import 'l10n/app_localizations.dart';
 import 'shared/widgets/connectivity_gate.dart';
 
@@ -13,10 +15,16 @@ class ShopilotApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = ref.watch(localeProvider);
+    final themeMode = ref.watch(themeModeProvider);
+    // AppColors is read statically (not via Theme.of(context)) across most
+    // screens, so flip the flag before the subtree below rebuilds.
+    AppColors.setDark(themeMode == ThemeMode.dark);
 
     return MaterialApp.router(
       title: 'Shopilot',
       theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: themeMode,
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
       locale: locale,

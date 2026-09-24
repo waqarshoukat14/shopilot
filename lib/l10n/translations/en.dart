@@ -49,7 +49,6 @@ const Map<String, String> enTranslations = {
   'purchase_price': 'Purchase Price',
   'selling_price': 'Selling Price',
   'quantity': 'Quantity',
-  'barcode': 'Barcode',
   'save_product': 'Save Product',
   'use_voice_input': 'Use Voice Input',
   'customer_profile': 'Customer Profile',

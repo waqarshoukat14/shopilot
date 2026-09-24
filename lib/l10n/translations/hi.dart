@@ -49,7 +49,6 @@ const Map<String, String> hiTranslations = {
   'purchase_price': 'खरीद मूल्य',
   'selling_price': 'बिक्री मूल्य',
   'quantity': 'मात्रा',
-  'barcode': 'बारकोड',
   'save_product': 'उत्पाद सहेजें',
   'use_voice_input': 'आवाज़ इनपुट का उपयोग करें',
   'customer_profile': 'ग्राहक प्रोफ़ाइल',

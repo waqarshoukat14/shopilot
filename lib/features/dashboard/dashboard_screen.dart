@@ -297,7 +297,7 @@ class _BusinessProfileRow extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const Icon(Icons.chevron_right, color: AppColors.textSecondary),
+                Icon(Icons.chevron_right, color: AppColors.textSecondary),
               ],
             ),
           );
@@ -341,7 +341,7 @@ class _BusinessProfileRow extends ConsumerWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right, color: AppColors.textSecondary),
+              Icon(Icons.chevron_right, color: AppColors.textSecondary),
             ],
           ),
         );
@@ -389,7 +389,7 @@ class _ProductsRow extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const Icon(Icons.chevron_right, color: AppColors.textSecondary),
+                Icon(Icons.chevron_right, color: AppColors.textSecondary),
               ],
             ),
           );
@@ -453,7 +453,7 @@ class _ProductsRow extends ConsumerWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right, color: AppColors.textSecondary),
+              Icon(Icons.chevron_right, color: AppColors.textSecondary),
             ],
           ),
         );
@@ -660,7 +660,7 @@ class _LowStockSection extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    const Icon(Icons.chevron_right, color: AppColors.textSecondary),
+                    Icon(Icons.chevron_right, color: AppColors.textSecondary),
                   ],
                 ),
               ),

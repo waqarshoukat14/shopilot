@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/constants/app_dimensions.dart';
@@ -31,14 +30,12 @@ class _EditProductScreenState extends ConsumerState<EditProductScreen> {
   late final TextEditingController _sellingPriceController;
   late final TextEditingController _quantityController;
   late final TextEditingController _lowStockLimitController;
-  late final TextEditingController _barcodeController;
   final _formKey = GlobalKey<FormState>();
   final _storageService = StorageService();
 
   late String _selectedUnit;
   String? _imageUrl;
   bool _isLoading = false;
-  bool _isScanning = false;
 
   final List<String> _commonCategories = [
     'Mobile Phones',
@@ -65,7 +62,6 @@ class _EditProductScreenState extends ConsumerState<EditProductScreen> {
         TextEditingController(text: p.quantity.toString());
     _lowStockLimitController =
         TextEditingController(text: p.lowStockLimit.toString());
-    _barcodeController = TextEditingController(text: p.barcode ?? '');
     _selectedUnit = kProductUnits.contains(p.unit) ? p.unit! : 'Piece';
     _imageUrl = p.imageUrl;
   }
@@ -78,12 +74,7 @@ class _EditProductScreenState extends ConsumerState<EditProductScreen> {
     _sellingPriceController.dispose();
     _quantityController.dispose();
     _lowStockLimitController.dispose();
-    _barcodeController.dispose();
     super.dispose();
-  }
-
-  void _scanBarcode() {
-    setState(() => _isScanning = true);
   }
 
   Future<void> _pickImage() async {
@@ -138,9 +129,6 @@ class _EditProductScreenState extends ConsumerState<EditProductScreen> {
         unit: _selectedUnit,
         lowStockLimit:
             int.tryParse(_lowStockLimitController.text.trim()) ?? 5,
-        barcode: _barcodeController.text.trim().isEmpty
-            ? null
-            : _barcodeController.text.trim(),
         imageUrl: _imageUrl,
         updatedAt: DateTime.now(),
       );
@@ -160,32 +148,6 @@ class _EditProductScreenState extends ConsumerState<EditProductScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-
-    if (_isScanning) {
-      return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.white,
-          title: Text(l10n.barcode),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () => setState(() => _isScanning = false),
-            ),
-          ],
-        ),
-        body: MobileScanner(
-          onDetect: (capture) {
-            final barcode = capture.barcodes.first.rawValue;
-            if (barcode != null) {
-              _barcodeController.text = barcode;
-              setState(() => _isScanning = false);
-            }
-          },
-        ),
-      );
-    }
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -214,9 +176,9 @@ class _EditProductScreenState extends ConsumerState<EditProductScreen> {
                         : Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Icons.camera_alt, size: 32, color: AppColors.textSecondary),
+                              Icon(Icons.camera_alt, size: 32, color: AppColors.textSecondary),
                               const SizedBox(height: 4),
-                              Text(l10n.addPhoto, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                              Text(l10n.addPhoto, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                             ],
                           ),
                   ),
@@ -371,21 +333,6 @@ class _EditProductScreenState extends ConsumerState<EditProductScreen> {
                 decoration:
                     const InputDecoration(hintText: '5'),
                 keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: AppDimensions.md),
-
-              // ── Barcode ──
-              Text(l10n.barcode, style: AppTextStyles.labelLarge),
-              const SizedBox(height: AppDimensions.sm),
-              TextFormField(
-                controller: _barcodeController,
-                decoration: InputDecoration(
-                  hintText: 'Scan or enter barcode (optional)',
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.qr_code_scanner),
-                    onPressed: _scanBarcode,
-                  ),
-                ),
               ),
               const SizedBox(height: AppDimensions.xl),
 

@@ -161,12 +161,10 @@ class _ProductDetailBody extends ConsumerWidget {
                       Text('Details', style: AppTextStyles.titleMedium),
                     ],
                   ),
-                  const Divider(color: AppColors.divider),
+                  Divider(color: AppColors.divider),
                   _KeyValueRow('Category', product.category),
                   _KeyValueRow('Stock', '${product.quantity} ${product.unit ?? ''}'),
                   _KeyValueRow('Low Stock Limit', '${product.lowStockLimit}'),
-                  if (product.barcode != null && product.barcode!.isNotEmpty)
-                    _KeyValueRow('Barcode', product.barcode!),
                   _KeyValueRow(
                     'Added',
                     '${product.createdAt.day}/${product.createdAt.month}/${product.createdAt.year}',

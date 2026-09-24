@@ -5,43 +5,62 @@ import 'app_text_styles.dart';
 class AppTheme {
   AppTheme._();
 
-  static ThemeData get light {
+  static ThemeData get light => _build(Brightness.light);
+  static ThemeData get dark => _build(Brightness.dark);
+
+  static ThemeData _build(Brightness brightness) {
+    final isDark = brightness == Brightness.dark;
+    final onSurface = AppColors.textPrimary;
+    final appBarForeground = isDark ? Colors.white : Colors.black;
+
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.light,
-      colorScheme: ColorScheme.light(
-        primary: AppColors.primary,
-        secondary: AppColors.secondary,
-        surface: AppColors.surface,
-        error: AppColors.error,
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
-        onSurface: AppColors.textPrimary,
-      ),
+      brightness: brightness,
+      colorScheme: isDark
+          ? ColorScheme.dark(
+              primary: AppColors.primary,
+              secondary: AppColors.secondary,
+              surface: AppColors.surface,
+              error: AppColors.error,
+              onPrimary: Colors.white,
+              onSecondary: Colors.white,
+              onSurface: onSurface,
+            )
+          : ColorScheme.light(
+              primary: AppColors.primary,
+              secondary: AppColors.secondary,
+              surface: AppColors.surface,
+              error: AppColors.error,
+              onPrimary: Colors.white,
+              onSecondary: Colors.white,
+              onSurface: onSurface,
+            ),
       scaffoldBackgroundColor: AppColors.background,
       textTheme: TextTheme(
-        displayLarge: AppTextStyles.displayLarge,
-        displayMedium: AppTextStyles.displayMedium,
-        headlineLarge: AppTextStyles.headlineLarge,
-        headlineMedium: AppTextStyles.headlineMedium,
-        titleLarge: AppTextStyles.titleLarge,
-        titleMedium: AppTextStyles.titleMedium,
-        bodyLarge: AppTextStyles.bodyLarge,
-        bodyMedium: AppTextStyles.bodyMedium,
-        labelLarge: AppTextStyles.labelLarge,
-        labelSmall: AppTextStyles.labelSmall,
+        displayLarge: AppTextStyles.displayLarge.copyWith(color: onSurface),
+        displayMedium: AppTextStyles.displayMedium.copyWith(color: onSurface),
+        headlineLarge: AppTextStyles.headlineLarge.copyWith(color: onSurface),
+        headlineMedium: AppTextStyles.headlineMedium.copyWith(color: onSurface),
+        titleLarge: AppTextStyles.titleLarge.copyWith(color: onSurface),
+        titleMedium: AppTextStyles.titleMedium.copyWith(color: onSurface),
+        bodyLarge: AppTextStyles.bodyLarge.copyWith(color: onSurface),
+        bodyMedium: AppTextStyles.bodyMedium.copyWith(color: onSurface),
+        labelLarge: AppTextStyles.labelLarge.copyWith(color: onSurface),
+        labelSmall: AppTextStyles.labelSmall.copyWith(color: onSurface),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.surface,
-        foregroundColor: Colors.black,
+        foregroundColor: appBarForeground,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: AppTextStyles.titleLarge.copyWith(color: Colors.black),
+        titleTextStyle: AppTextStyles.titleLarge.copyWith(color: appBarForeground),
         iconTheme: const IconThemeData(color: AppColors.primary),
       ),
       dialogTheme: DialogThemeData(
+        backgroundColor: AppColors.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        titleTextStyle: AppTextStyles.titleLarge.copyWith(color: Colors.black),
+        titleTextStyle: AppTextStyles.titleLarge.copyWith(color: onSurface),
+        contentTextStyle: AppTextStyles.bodyMedium.copyWith(color: onSurface),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -59,7 +78,7 @@ class AppTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primary,
-          side: const BorderSide(color: AppColors.border),
+          side: BorderSide(color: AppColors.border),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -72,11 +91,11 @@ class AppTheme {
         fillColor: AppColors.surface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColors.border),
+          borderSide: BorderSide(color: AppColors.border),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColors.border),
+          borderSide: BorderSide(color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
@@ -88,14 +107,14 @@ class AppTheme {
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
-        labelStyle: AppTextStyles.labelLarge,
+        labelStyle: AppTextStyles.labelLarge.copyWith(color: AppColors.textSecondary),
       ),
       cardTheme: CardThemeData(
         color: AppColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: AppColors.border, width: 0.5),
+          side: BorderSide(color: AppColors.border, width: 0.5),
         ),
         margin: const EdgeInsets.only(bottom: 12),
       ),
@@ -114,8 +133,9 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         behavior: SnackBarBehavior.floating,
       ),
-      bottomSheetTheme: const BottomSheetThemeData(
-        shape: RoundedRectangleBorder(
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: AppColors.surface,
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
       ),

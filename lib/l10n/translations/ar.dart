@@ -49,7 +49,6 @@ const Map<String, String> arTranslations = {
   'purchase_price': 'سعر الشراء',
   'selling_price': 'سعر البيع',
   'quantity': 'الكمية',
-  'barcode': 'الباركود',
   'save_product': 'حفظ المنتج',
   'use_voice_input': 'استخدام الإدخال الصوتي',
   'customer_profile': 'ملف العميل',

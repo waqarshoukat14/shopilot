@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
@@ -36,11 +35,9 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
   final _sellingPriceController = TextEditingController();
   final _quantityController = TextEditingController();
   final _lowStockLimitController = TextEditingController(text: '5');
-  final _barcodeController = TextEditingController();
   final _storageService = StorageService();
   String? _imageUrl;
   bool _isLoading = false;
-  bool _isScanning = false;
   String _selectedUnit = 'Piece';
 
   double get _totalPrice {
@@ -75,7 +72,6 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
     _sellingPriceController.dispose();
     _quantityController.dispose();
     _lowStockLimitController.dispose();
-    _barcodeController.dispose();
     super.dispose();
   }
 
@@ -87,10 +83,6 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
     if (url != null) {
       setState(() => _imageUrl = url);
     }
-  }
-
-  void _scanBarcode() {
-    setState(() => _isScanning = true);
   }
 
   Widget _buildImage(String path) {
@@ -133,9 +125,6 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
       final unit = data['unit'] as String?;
       if (unit != null && kProductUnits.contains(unit)) _selectedUnit = unit;
 
-      final barcode = data['barcode'] as String?;
-      if (barcode != null && barcode.trim().isNotEmpty) _barcodeController.text = barcode.trim();
-
       final lowStockLimit = data['lowStockLimit'];
       if (lowStockLimit is num) _lowStockLimitController.text = lowStockLimit.round().toString();
     });
@@ -177,7 +166,6 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
         quantity: int.parse(_quantityController.text.trim()),
         unit: _selectedUnit,
         lowStockLimit: int.tryParse(_lowStockLimitController.text.trim()) ?? 5,
-        barcode: _barcodeController.text.trim().isEmpty ? null : _barcodeController.text.trim(),
         imageUrl: _imageUrl,
       );
       await ref.read(productListNotifierProvider.notifier).addProduct(product);
@@ -194,32 +182,6 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-
-    if (_isScanning) {
-      return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.white,
-          title: Text(l10n.barcode),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () => setState(() => _isScanning = false),
-            ),
-          ],
-        ),
-        body: MobileScanner(
-          onDetect: (capture) {
-            final barcode = capture.barcodes.first.rawValue;
-            if (barcode != null) {
-              _barcodeController.text = barcode;
-              setState(() => _isScanning = false);
-            }
-          },
-        ),
-      );
-    }
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -246,9 +208,9 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
                         : Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Icons.camera_alt, size: 32, color: AppColors.textSecondary),
+                              Icon(Icons.camera_alt, size: 32, color: AppColors.textSecondary),
                               const SizedBox(height: 4),
-                              Text(l10n.addPhoto, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                              Text(l10n.addPhoto, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                             ],
                           ),
                   ),
@@ -404,19 +366,6 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
                 controller: _lowStockLimitController,
                 decoration: const InputDecoration(hintText: '5'),
                 keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: AppDimensions.md),
-              Text(l10n.barcode, style: AppTextStyles.labelLarge),
-              const SizedBox(height: AppDimensions.sm),
-              TextFormField(
-                controller: _barcodeController,
-                decoration: InputDecoration(
-                  hintText: 'Scan or enter barcode (optional)',
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.qr_code_scanner),
-                    onPressed: _scanBarcode,
-                  ),
-                ),
               ),
               const SizedBox(height: AppDimensions.xl),
               AppButton(

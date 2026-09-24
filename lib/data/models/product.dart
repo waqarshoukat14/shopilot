@@ -8,7 +8,6 @@ class Product {
   final String? sku;
   final String? unit;
   final int lowStockLimit;
-  final String? barcode;
   final String? imageUrl;
   final String? description;
   final DateTime createdAt;
@@ -24,7 +23,6 @@ class Product {
     this.sku,
     this.unit,
     this.lowStockLimit = 5,
-    this.barcode,
     this.imageUrl,
     this.description,
     DateTime? createdAt,
@@ -47,7 +45,6 @@ class Product {
     'sku': sku,
     'unit': unit,
     'low_stock_limit': lowStockLimit,
-    'barcode': barcode,
     'image_url': imageUrl,
     'description': description,
     'created_at': createdAt.toIso8601String(),
@@ -55,6 +52,10 @@ class Product {
   };
 
   /// Serialisation for the backend REST API (PascalCase fields).
+  ///
+  /// bar_code is sent as an empty string, not omitted — the backend's
+  /// schema requires it to be a valid string (rejects null with a 422),
+  /// even though the app no longer collects a barcode from the user.
   Map<String, dynamic> toApiMap() => {
     if (id.isNotEmpty) 'id': id,
     'productName': name,
@@ -65,7 +66,7 @@ class Product {
     'Quantity': quantity,
     'Unit': unit,
     'stock_alert_threshold': lowStockLimit,
-    'bar_code': barcode ?? '',
+    'bar_code': '',
     'imgURL': imageUrl ?? '',
     'description': description,
   };
@@ -83,8 +84,6 @@ class Product {
     final lowStockLimit = (map['low_stock_threshold'] ?? map['stock_alert_threshold'] ?? map['low_stock_limit'] ?? map['lowStockLimit']) as num? ?? 5;
     // Normalize id: API may return int or String
     final id = (map['id'] ?? '').toString();
-    // Normalize barcode
-    final barcode = map['bar_code'] as String? ?? map['barcode'] as String?;
 
     return Product(
       id: id,
@@ -96,7 +95,6 @@ class Product {
       sku: map['SKU'] as String? ?? map['sku'] as String?,
       unit: map['Unit'] as String? ?? map['unit'] as String?,
       lowStockLimit: lowStockLimit.toInt(),
-      barcode: barcode,
       imageUrl: map['image'] as String? ?? map['imgURL'] as String? ?? map['image_url'] as String? ?? map['imageUrl'] as String?,
       description: map['description'] as String?,
       createdAt: _parseDate(
@@ -125,7 +123,6 @@ class Product {
     String? sku,
     String? unit,
     int? lowStockLimit,
-    String? barcode,
     String? imageUrl,
     String? description,
     DateTime? createdAt,
@@ -140,7 +137,6 @@ class Product {
     sku: sku ?? this.sku,
     unit: unit ?? this.unit,
     lowStockLimit: lowStockLimit ?? this.lowStockLimit,
-    barcode: barcode ?? this.barcode,
     imageUrl: imageUrl ?? this.imageUrl,
     description: description ?? this.description,
     createdAt: createdAt ?? this.createdAt,

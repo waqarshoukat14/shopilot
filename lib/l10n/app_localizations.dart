@@ -100,7 +100,6 @@ class AppLocalizations {
   String get purchasePrice => translate('purchase_price');
   String get sellingPrice => translate('selling_price');
   String get quantity => translate('quantity');
-  String get barcode => translate('barcode');
   String get saveProduct => translate('save_product');
   String get useVoiceInput => translate('use_voice_input');
   String get customerProfile => translate('customer_profile');

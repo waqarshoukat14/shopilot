@@ -10,6 +10,7 @@ import '../../shared/widgets/app_card.dart';
 import '../../shared/widgets/app_logo.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/locale_provider.dart';
+import '../../providers/theme_provider.dart';
 import '../../data/services/api_service.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -36,7 +37,7 @@ class SettingsScreen extends ConsumerWidget {
                     label: 'Edit Business Profile',
                     onTap: () => context.push('/business-setup'),
                   ),
-                  const Divider(color: AppColors.divider),
+                  Divider(color: AppColors.divider),
                   _SettingRow(
                     icon: Icons.subscriptions_outlined,
                     label: 'Subscription',
@@ -52,31 +53,22 @@ class SettingsScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   _buildLanguageRow(context, ref),
-                  const Divider(color: AppColors.divider),
+                  Divider(color: AppColors.divider),
                   _SettingRow(
                     icon: Icons.record_voice_over,
                     label: 'Voice Language',
                     trailing: 'English',
                     onTap: () => _showLanguagePicker(context, ref, isVoice: true),
                   ),
-                  const Divider(color: AppColors.divider),
+                  Divider(color: AppColors.divider),
                   _SettingRow(
                     icon: Icons.notifications_outlined,
                     label: 'Notifications',
                     trailing: 'On',
                     onTap: () {},
                   ),
-                  const Divider(color: AppColors.divider),
-                  _SettingRow(
-                    icon: Icons.dark_mode_outlined,
-                    label: 'Dark Mode',
-                    trailing: 'Off',
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Dark mode coming soon!')),
-                      );
-                    },
-                  ),
+                  Divider(color: AppColors.divider),
+                  _buildDarkModeRow(context, ref),
                 ],
               ),
             ),
@@ -90,7 +82,7 @@ class SettingsScreen extends ConsumerWidget {
                     label: 'Backup & Restore',
                     onTap: () {},
                   ),
-                  const Divider(color: AppColors.divider),
+                  Divider(color: AppColors.divider),
                   _SettingRow(
                     icon: Icons.info_outline,
                     label: 'About',
@@ -110,7 +102,7 @@ class SettingsScreen extends ConsumerWidget {
                     label: 'Privacy Policy',
                     onTap: () => context.push('/settings/privacy-policy'),
                   ),
-                  const Divider(color: AppColors.divider),
+                  Divider(color: AppColors.divider),
                   _SettingRow(
                     icon: Icons.description_outlined,
                     label: 'Terms & Conditions',
@@ -220,6 +212,27 @@ class SettingsScreen extends ConsumerWidget {
       label: 'Language',
       trailing: languageNames[currentLocale.languageCode] ?? 'English',
       onTap: () => _showLanguagePicker(context, ref),
+    );
+  }
+
+  Widget _buildDarkModeRow(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(themeModeProvider) == ThemeMode.dark;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppDimensions.xs),
+      child: Row(
+        children: [
+          Icon(Icons.dark_mode_outlined, size: AppDimensions.iconMd, color: AppColors.primary),
+          const SizedBox(width: AppDimensions.md),
+          Expanded(
+            child: Text('Dark Mode', style: AppTextStyles.bodyLarge.copyWith(color: AppColors.primary)),
+          ),
+          Switch(
+            value: isDark,
+            activeThumbColor: AppColors.primary,
+            onChanged: (value) => ref.read(themeModeProvider.notifier).setDark(value),
+          ),
+        ],
+      ),
     );
   }
 

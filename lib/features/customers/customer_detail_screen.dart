@@ -165,7 +165,7 @@ class CustomerDetailScreen extends ConsumerWidget {
             ],
           ),
           if (customer.lastPurchase != null) ...[
-            const Divider(color: AppColors.divider, height: AppDimensions.md),
+            Divider(color: AppColors.divider, height: AppDimensions.md),
             Text(
               '${l10n.lastPurchase}: ${customer.lastPurchase!.day}/${customer.lastPurchase!.month}/${customer.lastPurchase!.year}',
               style: AppTextStyles.labelSmall.copyWith(color: AppColors.textSecondary),

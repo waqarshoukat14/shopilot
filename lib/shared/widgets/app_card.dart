@@ -25,7 +25,7 @@ class AppCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(borderRadius ?? AppDimensions.radiusMd),
-        side: const BorderSide(color: AppColors.border, width: 0.5),
+        side: BorderSide(color: AppColors.border, width: 0.5),
       ),
       child: InkWell(
         onTap: onTap,

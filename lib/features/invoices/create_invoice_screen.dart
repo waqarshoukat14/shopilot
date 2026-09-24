@@ -165,11 +165,14 @@ class _CreateInvoiceScreenState extends ConsumerState<CreateInvoiceScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                       decoration: BoxDecoration(
-                        gradient: AppColors.softGradient,
+                        color: AppColors.primarySoft,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(color: AppColors.border),
                       ),
-                      child: Text('$qty', style: AppTextStyles.headlineMedium),
+                      child: Text(
+                        '$qty',
+                        style: AppTextStyles.headlineMedium.copyWith(color: AppColors.textPrimary),
+                      ),
                     ),
                     IconButton(
                       icon: const Icon(Icons.add_circle_outline, color: AppColors.primary),
@@ -344,7 +347,7 @@ class _CreateInvoiceScreenState extends ConsumerState<CreateInvoiceScreen> {
               Text(formatPrice(_subtotal, _currency(ref)), style: AppTextStyles.titleLarge),
             ],
           ),
-          const Divider(color: AppColors.border),
+          Divider(color: AppColors.border),
           ..._items.map((item) => Padding(
             padding: const EdgeInsets.only(bottom: AppDimensions.sm),
             child: Row(
@@ -487,7 +490,7 @@ class _CreateInvoiceScreenState extends ConsumerState<CreateInvoiceScreen> {
           _totalRow('Subtotal', _subtotal),
           if (_discountPercent > 0) _totalRow('Discount ($_discountPercent%)', -_discountAmount, color: AppColors.error),
           if (_taxPercent > 0) _totalRow('Tax ($_taxPercent%)', _taxAmount, color: AppColors.warning),
-          const Divider(color: AppColors.border),
+          Divider(color: AppColors.border),
           _totalRow('Total', _total, isBold: true),
           _totalRow('Paid', _paidAmount, color: AppColors.success),
           if (_dueAmount > 0) _totalRow('Due', _dueAmount, color: AppColors.error),

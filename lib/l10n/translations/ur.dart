@@ -49,7 +49,6 @@ const Map<String, String> urTranslations = {
   'purchase_price': 'خریداری قیمت',
   'selling_price': 'فروخت قیمت',
   'quantity': 'مقدار',
-  'barcode': 'بار کوڈ',
   'save_product': 'مصنوعہ محفوظ کریں',
   'use_voice_input': 'آواز انپٹ استعمال کریں',
   'customer_profile': 'صارف کا پروفائل',

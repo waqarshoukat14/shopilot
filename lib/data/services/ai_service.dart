@@ -81,7 +81,6 @@ Extract these product fields and return ONLY this JSON shape, no other text:
   "sellingPrice": number|null,
   "quantity": number|null,
   "unit": "..."|null,
-  "barcode": "..."|null,
   "lowStockLimit": number|null
 }
 

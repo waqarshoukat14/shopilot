@@ -74,16 +74,22 @@ final GoRouter appRouter = GoRouter(
     return null;
   },
   routes: [
-    _route('/', (_) => const SplashScreen()),
-    _route('/onboarding', (_) => const OnboardingScreen()),
-    _route('/login', (_) => const LoginScreen()),
-    _route('/register', (_) => const RegisterScreen()),
-    _route('/forgot-password', (_) => const ForgotPasswordScreen()),
-    _route('/business-setup', (_) => const BusinessSetupScreen()),
-    _route('/business-detail', (_) => const BusinessDetailScreen()),
-    _route('/dashboard', (_) => const DashboardScreen()),
-    _route('/products', (_) => const ProductListScreen()),
-    _route('/products/add', (_) => const AddProductScreen()),
+    // Note: these are intentionally NOT `const`-instantiated. A `const`
+    // widget here would be canonicalized by Dart into one shared instance,
+    // and Flutter's element diffing then treats every rebuild as "identical"
+    // and skips calling build() again — which silently freezes the screen
+    // (e.g. dashboard colors) at whatever ambient state (like dark mode)
+    // was active the first time it mounted.
+    _route('/', (_) => SplashScreen()),
+    _route('/onboarding', (_) => OnboardingScreen()),
+    _route('/login', (_) => LoginScreen()),
+    _route('/register', (_) => RegisterScreen()),
+    _route('/forgot-password', (_) => ForgotPasswordScreen()),
+    _route('/business-setup', (_) => BusinessSetupScreen()),
+    _route('/business-detail', (_) => BusinessDetailScreen()),
+    _route('/dashboard', (_) => DashboardScreen()),
+    _route('/products', (_) => ProductListScreen()),
+    _route('/products/add', (_) => AddProductScreen()),
     _route(
       '/products/:id',
       (state) {
@@ -101,19 +107,19 @@ final GoRouter appRouter = GoRouter(
         return _EditProductWrapper(productId: id);
       },
     ),
-    _route('/customers', (_) => const CustomerListScreen()),
+    _route('/customers', (_) => CustomerListScreen()),
     _route(
       '/customers/:id',
       (state) => CustomerDetailScreen(customerId: state.pathParameters['id']!),
     ),
-    _route('/invoices/create', (_) => const CreateInvoiceScreen()),
-    _route('/ai-voice', (_) => const AiVoiceScreen()),
-    _route('/reports', (_) => const ReportsScreen()),
-    _route('/insights', (_) => const AiInsightsScreen()),
-    _route('/subscription', (_) => const SubscriptionScreen()),
-    _route('/settings', (_) => const SettingsScreen()),
-    _route('/settings/privacy-policy', (_) => const PrivacyPolicyScreen()),
-    _route('/settings/terms', (_) => const TermsScreen()),
+    _route('/invoices/create', (_) => CreateInvoiceScreen()),
+    _route('/ai-voice', (_) => AiVoiceScreen()),
+    _route('/reports', (_) => ReportsScreen()),
+    _route('/insights', (_) => AiInsightsScreen()),
+    _route('/subscription', (_) => SubscriptionScreen()),
+    _route('/settings', (_) => SettingsScreen()),
+    _route('/settings/privacy-policy', (_) => PrivacyPolicyScreen()),
+    _route('/settings/terms', (_) => TermsScreen()),
   ],
 );
 

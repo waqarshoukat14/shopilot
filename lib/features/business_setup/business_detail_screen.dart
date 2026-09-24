@@ -122,7 +122,7 @@ class _EmptyBusiness extends StatelessWidget {
                             Text('From Your Registration', style: AppTextStyles.titleMedium),
                           ],
                         ),
-                        const Divider(color: AppColors.divider),
+                        Divider(color: AppColors.divider),
                         if (user.fullName.isNotEmpty)
                           _EmptyStateInfoRow(Icons.badge_outlined, 'Name', user.fullName),
                         if (user.phone != null)
@@ -314,7 +314,7 @@ class _BusinessDetailBody extends ConsumerWidget {
               Text('Contact Information', style: AppTextStyles.titleMedium),
             ],
           ),
-          const Divider(color: AppColors.divider),
+          Divider(color: AppColors.divider),
           if (business.phoneNumber != null && business.phoneNumber!.isNotEmpty)
             _KeyValueRow(Icons.phone, 'Phone', business.phoneNumber!),
           if (business.email != null && business.email!.isNotEmpty)
@@ -348,7 +348,7 @@ class _BusinessDetailBody extends ConsumerWidget {
               Text('Location', style: AppTextStyles.titleMedium),
             ],
           ),
-          const Divider(color: AppColors.divider),
+          Divider(color: AppColors.divider),
           Text(addressParts.join(', '), style: AppTextStyles.bodyLarge),
           const SizedBox(height: AppDimensions.sm),
           Wrap(
@@ -377,7 +377,7 @@ class _BusinessDetailBody extends ConsumerWidget {
               Text('Description', style: AppTextStyles.titleMedium),
             ],
           ),
-          const Divider(color: AppColors.divider),
+          Divider(color: AppColors.divider),
           Text(business.description!, style: AppTextStyles.bodyMedium),
         ],
       ),
@@ -396,7 +396,7 @@ class _BusinessDetailBody extends ConsumerWidget {
               Text('Account Details', style: AppTextStyles.titleMedium),
             ],
           ),
-          const Divider(color: AppColors.divider),
+          Divider(color: AppColors.divider),
           _KeyValueRow(Icons.calendar_today, 'Created', _formatDate(business.createdAt)),
           if (business.updatedAt != null)
             _KeyValueRow(Icons.update, 'Last Updated', _formatDate(business.updatedAt!)),

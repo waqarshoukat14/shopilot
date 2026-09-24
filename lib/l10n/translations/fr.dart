@@ -49,7 +49,6 @@ const Map<String, String> frTranslations = {
   'purchase_price': "Prix d'Achat",
   'selling_price': 'Prix de Vente',
   'quantity': 'Quantité',
-  'barcode': 'Code-barres',
   'save_product': 'Enregistrer le Produit',
   'use_voice_input': "Utiliser l'Entrée Vocale",
   'customer_profile': 'Profil Client',

@@ -38,7 +38,7 @@ class SkeletonLoader extends StatelessWidget {
       height: 80,
       padding: AppDimensions.cardPadding,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
         border: Border.all(color: AppColors.border, width: 0.5),
       ),
@@ -67,7 +67,7 @@ class SkeletonLoader extends StatelessWidget {
       height: 100,
       padding: AppDimensions.cardPadding,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
         border: Border.all(color: AppColors.border, width: 0.5),
       ),

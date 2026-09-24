@@ -49,7 +49,6 @@ const Map<String, String> esTranslations = {
   'purchase_price': 'Precio de Compra',
   'selling_price': 'Precio de Venta',
   'quantity': 'Cantidad',
-  'barcode': 'Código de Barras',
   'save_product': 'Guardar Producto',
   'use_voice_input': 'Usar Entrada de Voz',
   'customer_profile': 'Perfil del Cliente',
